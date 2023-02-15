@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="hs_page_title">
+    <div class="container">
+        <h3>Patient Signup</h3>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/user/login">Sigin</a></li>
+        </ul>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <h4 class="hs_heading">Login</h4>
+            <div class="hs_comment_form">
+                <form method="post">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <!-- /.col-lg-6 -->
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="input-group"> <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button"><i class="fa fa-user"></i></button>
+                                </span>
+                                <input required id="id_username" name="username" value="{{ form.username.value|default_if_none:"" }}" type="text" class="form-control" placeholder="Username">
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+
+                            <!-- /.col-lg-6 -->
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button"><i class="fa fa-lock"></i></button>
+                                      <i class="fa fa-lock"></i>
+                                    </span>
+                                    <input required id="id_password" name="password" type="password" class="form-control" placeholder="Password">
+                                    <span class="input-group-addon password-toggle-addon" onclick="togglePasswordVisibility()">
+                                      <i class="fa fa-eye"></i>
+                                    </span>
+                                  </div>
+                                  
+                                  <script>
+                                    function togglePasswordVisibility() {
+                                      var passwordInput = document.getElementById("id_password");
+                                      var passwordToggle = document.querySelector(".password-toggle-addon i");
+                                      if (passwordInput.type === "password") {
+                                        passwordInput.type = "text";
+                                        passwordToggle.classList.remove("fa-eye");
+                                        passwordToggle.classList.add("fa-eye-slash");
+                                      } else {
+                                        passwordInput.type = "password";
+                                        passwordToggle.classList.remove("fa-eye-slash");
+                                        passwordToggle.classList.add("fa-eye");
+                                      }
+                                    }
+                                  </script>
+                                <!-- /input-group -->
+                            </div>
+                        </div>
+                        <p id="err"></p>
+                        <div class="form-group">
+                            <div class="col-lg-8 col-md-8 col-sm-12">
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <button id="em_sub" class="btn btn-success pull-right" type="submit">Login</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+{% endblock %}

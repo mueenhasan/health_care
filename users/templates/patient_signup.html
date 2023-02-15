@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="hs_page_title">
+    <div class="container">
+        <h3>Patient Signup</h3>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/user/doctor_signup">Signup</a></li>
+        </ul>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <h4 class="hs_heading">Patient Signup</h4>
+            <div class="hs_comment_form">
+                <form method="post">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group"> <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button"><i class="fa fa-user"></i></button>
+                                </span>
+                                <input required id="id_first_name" name="first_name" value="{{ form.first_name.value|default_if_none:"" }}" type="text" class="form-control" placeholder="First Name">
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group"> 
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button"><i class="fa fa-user"></i></button>
+                                </span>
+                                <input required id="id_last_name" name="last_name" value="{{ form.last_name.value|default_if_none:"" }}" type="text" class="form-control" placeholder="Last Name">
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button"><i class="fa fa-venus-mars"></i></button>
+                                </span>
+                                <select required id="id_gender" name="gender" class="form-control">
+                                    <option value="" selected>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- /.col-lg-6 --> 
+
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button"><i class="fa fa-tint"></i></button>
+                                </span>
+                                <select required id="id_blood_group" name="blood_group" class="form-control">
+                                    <option value="" selected>Select Blood Group</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group"> <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button"><i class="fa fa-user"></i></button>
+                                </span>
+                                <input required id="id_age" name="age" value="{{ form.age.value|default_if_none:"" }}" type="number" class="form-control" placeholder="Age">
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group"> <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button"><i class="fa fa-user"></i></button>
+                                </span>
+                                <input required id="id_phone" name="phone" value="{{ form.phone.value|default_if_none:"" }}" type="text" class="form-control" placeholder="Phone">
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <!-- /.col-lg-6 -->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group"> <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button"><i class="fa fa-user"></i></button>
+                                </span>
+                                <input required id="id_username" name="username" value="{{ form.username.value|default_if_none:"" }}" type="text" class="form-control" placeholder="Username">
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <!-- /.col-lg-6 -->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group"> <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button"><i class="fa fa-envelope"></i></button>
+                                </span>
+                                <input required id="id_email" name="email" type="email" value="{{ form.email.value|default_if_none:"" }}" class="form-control" placeholder="Email">
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <!-- /.col-lg-6 -->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group"> <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button"><i class="fa fa-lock"></i></button>
+                                </span>
+                                <input required id="id_password1" name="password1" autocomplete="new-password" type="password" class="form-control" placeholder="Password">
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <!-- /.col-lg-6 -->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group"> <span class="input-group-btn">
+                                    <button class="btn btn-success" type="button"><i class="fa fa-lock"></i></button>
+                                </span>
+                                <input required id="id_password2" name="password2" autocomplete="new-password" type="password" class="form-control" placeholder="Confirm Password">
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <p id="err"></p>
+                        <div class="form-group">
+                            <div class="col-lg-8 col-md-8 col-sm-12">
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <button id="em_sub" class="btn btn-success pull-right" type="submit">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+{% endblock %}

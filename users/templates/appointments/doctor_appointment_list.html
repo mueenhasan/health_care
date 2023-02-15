@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Appointments</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Patient</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Hemoglobin</th>
+        <th>BMI</th>
+        <th>Platelets</th>
+        <th>Blood Sugar</th>
+        <th>Blood Pressure</th>
+        <th>Symptoms</th>
+        <th>Diagnosis</th>
+        <th>Prescription</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for appointment in appointments %}
+        <tr>
+          <td>{{ appointment.patient }}</td>
+          <td>{{ appointment.date }}</td>
+          <td>{{ appointment.time }}</td>
+          <td>{{ appointment.hemoglobin }}</td>
+          <td>{{ appointment.bmi }}</td>
+          <td>{{ appointment.platelets }}</td>
+          <td>{{ appointment.blood_sugar }}</td>
+          <td>{{ appointment.blood_pressure }}</td>
+          <td>{{ appointment.symptoms }}</td>
+          <td>{{ appointment.diagnosis }}</td>
+          <td>{{ appointment.prescription }}</td>
+          <td><a class="btn btn-success" type="button" href="/user/appointments/{{appointment.pk}}/update">Update</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

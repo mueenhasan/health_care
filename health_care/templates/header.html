@@ -1,0 +1,60 @@
+{% load static %}
+<header id="hs_header">
+  <div class="container">
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <div id="hs_logo" > <a href="index.html"> <img src="{% static 'images/logo.svg' %}" alt=""> </a> </div>
+          <!-- #logo --> 
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-10">
+          <button type="button" class="hs_nav_toggle navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">Menu<i class="fa fa-bars"></i></button>
+          <nav>
+            <ul class="hs_menu collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <li><a class="active" href="/">Home</a></li>
+              <li><a>Appointments</a>
+                <ul>
+                  {% if request.user.is_doctor %}
+                  <li><a href="/user/doctor_appointments">List Appointments</a></li>
+                  {% elif request.user.is_patient %}
+                  <li><a href="/user/patient_appointments">List Appointments</a></li>
+                  <li><a href="/user/book_appointment">Book Appointment</a></li>
+                  {% else %}
+                  <li><a href="#">List Appointments</a></li>
+                  <li><a href="#">Book Appointment</a></li>
+                  {% endif %}
+                </ul>
+              </li>
+              {% if request.user.is_anonymous %}
+              <li><a>Signup</a>
+                <ul>
+                  <li><a href="/user/doctor_signup">Doctor Signup</a></li>
+                  <li><a href="/user/patient_signup">Patient Signup</a></li>
+                </ul>
+              </li>
+              <li><a class="active" href="/user/login">Login</a></li>
+              {% else %}
+              <li><a class="active" href="/user/logout">Logout</a></li>
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2">
+          <div class="hs_social">
+            <ul>
+              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+              <li><a href="#" id="hs_search"><i class="fa fa-search"></i></a></li>
+            </ul>
+          </div>
+          <div class="hs_search_box">
+            <form class="form-inline" role="form">
+              <div class="form-group has-success has-feedback">
+                <input type="text" class="form-control" id="inputSuccess4" placeholder="Search">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span> </div>
+            </form>
+          </div>
+        </div>
+    </div>
+  </div>
+</header>
