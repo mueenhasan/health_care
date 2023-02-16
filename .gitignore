@@ -1,1 +1,14 @@
+# Environments
 venv/
+env/
+ENV/
+.venv/
+.env/
+.env
+
+# DB Files
+*.sqlite
+*.sqlite3
+
+# Statics
+staticfiles/

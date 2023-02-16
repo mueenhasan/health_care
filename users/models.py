@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
-from django.utils import timezone
 
 
 class User(AbstractUser):
@@ -11,7 +10,6 @@ class User(AbstractUser):
 
 class Doctor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    is_patient = models.BooleanField(default=True)
     name = models.CharField(max_length=100)
     specialization = models.CharField(max_length=100)
     expertise = models.CharField(max_length=50)
@@ -22,8 +20,8 @@ class Patient(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     age = models.PositiveIntegerField()
     phone = models.CharField(max_length=15)
-    gender= models.CharField( max_length=6)
-    bloogd_group= models.CharField (max_length= 5)
+    gender = models.CharField(max_length=6, null=True, blank=True)
+    bloogd_group = models.CharField(max_length=5, null=True, blank=True)
 
 
 class Appointment(models.Model):
@@ -50,5 +48,5 @@ class Appointment(models.Model):
             date__month=current_month
         ).count()
         if appointments_this_month >= 15:
-            raise ValidationError('Doctor is busy this month you can have appointment for next month!')
+            raise ValidationError('Doctor is busy this month you can have appointment for another month!')
         super().save(*args, **kwargs)
