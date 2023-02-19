@@ -58,13 +58,22 @@ class AppointmentCreateView(CreateView):
     model = Appointment
     form_class = AppointmentForm
     template_name = 'appointments/appointment_form.html'
+    qualifications = Doctor.objects.values_list('qualifications', flat=True).distinct().order_by('qualifications')
+    expertise = Doctor.objects.values_list('expertise', flat=True).distinct().order_by('expertise')
+    doctors = User.objects.filter(is_doctor=True).order_by('first_name', 'last_name')
 
     def get(self, request):
         form = self.form_class()
-        qualifications = Doctor.objects.values_list('qualifications', flat=True).distinct().order_by('qualifications')
-        expertise = Doctor.objects.values_list('expertise', flat=True).distinct().order_by('expertise')
-        doctors = User.objects.filter(is_doctor=True).order_by('first_name', 'last_name')
-        return render(request, self.template_name, {'form': form, "doctors": doctors, "expertise": expertise, "qualifications": qualifications})
+        return render(
+            request,
+            self.template_name,
+            {
+                'form': form,
+                "doctors": self.doctors,
+                "expertise": self.expertise,
+                "qualifications": self.qualifications,
+                "selected_doctor": None
+        })
 
     def post(self, request):
         form = self.form_class(request.POST)
@@ -73,7 +82,16 @@ class AppointmentCreateView(CreateView):
             appointment.patient = request.user
             appointment.save()
             return redirect('patient-appointments')
-        return render(request, self.template_name, {'form': form})
+        selected_doctor = form.cleaned_data.get('doctor').id
+        return render(
+            request,
+            self.template_name, {
+                'form': form,
+                "doctors": self.doctors,
+                "expertise": self.expertise,
+                "qualifications": self.qualifications,
+                "selected_doctor": selected_doctor
+        })
 
 
 def load_doctors(request):

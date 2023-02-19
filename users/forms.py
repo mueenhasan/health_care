@@ -1,7 +1,6 @@
 import datetime
+from datetime import timedelta
 from django import forms
-from django.db.models import CharField, Value
-from django.db.models.functions import Concat
 from django.contrib.auth.forms import UserCreationForm
 from users.models import Doctor, Patient, User
 from .models import Appointment
@@ -106,10 +105,14 @@ class AppointmentForm(forms.ModelForm):
         date = cleaned_data.get("date")
         time = cleaned_data.get("time")
         doctor = cleaned_data.get("doctor")
-
-        appointment = Appointment.objects.filter(date=date, time=time, doctor=doctor).first()
+        selected_date_time = datetime.datetime(year=date.year, month=date.month, day=date.day, hour=time.hour, minute=time.minute)
+        if datetime.datetime.now() > selected_date_time:
+            raise forms.ValidationError("Selected time slot is invalid")
+        min_time = (selected_date_time - timedelta(minutes=30)).time()
+        max_time = (selected_date_time + timedelta(minutes=30)).time()
+        appointment = Appointment.objects.filter(time__gte=min_time, time__lte=max_time, date=date, doctor=doctor).first()
         if appointment:
-            raise forms.ValidationError("This appointment has already been taken, please choose another date and time")
+            raise forms.ValidationError("Selected time slot is unavailable")
         return cleaned_data
 
 

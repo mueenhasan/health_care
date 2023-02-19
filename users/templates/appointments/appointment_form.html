@@ -38,7 +38,7 @@
                                 <span class="input-group-btn">
                                     <button class="fa-btn btn btn-success" type="button"><i class="fa fa-user-md"></i></button>
                                 </span>
-                                <select required id="id_qualifications" name="qualifications" class="form-control">
+                                <select id="id_qualifications" name="qualifications" class="form-control">
                                     <option value="">Select Doctor's Qualifications</option>
                                     {% for qualification in qualifications %}
                                         <option value="{{ qualification }}">{{ qualification }}</option>
@@ -52,7 +52,7 @@
                                 <span class="input-group-btn">
                                     <button class="fa-btn btn btn-success" type="button"><i class="fa fa-user-md"></i></button>
                                 </span>
-                                <select required id="id_expertise" name="expertise" class="form-control">
+                                <select id="id_expertise" name="expertise" class="form-control">
                                     <option value="">Select Doctor's Expertise</option>
                                     {% for expert in expertise %}
                                         <option value="{{ expert }}">{{ expert }}</option>
@@ -69,7 +69,11 @@
                                 <select required id="id_doctor" name="doctor" class="form-control">
                                     <option value="">Select Doctor</option>
                                     {% for doctor in doctors %}
+                                        {% if selected_doctor == doctor.id %}
+                                        <option value="{{ doctor.id }}" selected>Dr. {{ doctor.first_name }} {{ doctor.last_name }}</option>
+                                        {% else %}
                                         <option value="{{ doctor.id }}">Dr. {{ doctor.first_name }} {{ doctor.last_name }}</option>
+                                        {% endif %}
                                     {% endfor %}
                                 </select>
                             </div>

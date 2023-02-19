@@ -18,7 +18,7 @@ urlpatterns = [
     path('patient-appointments', PatientAppointmentListView.as_view(), name='patient-appointments'),
     path('book-appointment', AppointmentCreateView.as_view(), name='book-appointment'),
     path('ajax/load-doctors/', load_doctors, name='ajax_load_doctors'),
-    path('appointments/<int:pk>/update', AppointmentUpdateView.as_view(), name='update-appointment'),
+    path('appointments/<int:pk>', AppointmentUpdateView.as_view(), name='update-appointment'),
     path(
         'login',
         views.LoginView.as_view(

@@ -1,40 +1,60 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
+{% load static %}
 {% block content %}
-  <h1>Appointments</h1>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Patient</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Hemoglobin</th>
-        <th>BMI</th>
-        <th>Platelets</th>
-        <th>Blood Sugar</th>
-        <th>Blood Pressure</th>
-        <th>Symptoms</th>
-        <th>Diagnosis</th>
-        <th>Prescription</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for appointment in appointments %}
-        <tr>
-          <td>{{ appointment.patient }}</td>
-          <td>{{ appointment.date }}</td>
-          <td>{{ appointment.time }}</td>
-          <td>{{ appointment.hemoglobin }}</td>
-          <td>{{ appointment.bmi }}</td>
-          <td>{{ appointment.platelets }}</td>
-          <td>{{ appointment.blood_sugar }}</td>
-          <td>{{ appointment.blood_pressure }}</td>
-          <td>{{ appointment.symptoms }}</td>
-          <td>{{ appointment.diagnosis }}</td>
-          <td>{{ appointment.prescription }}</td>
-          <td><a class="btn btn-success" type="button" href="/user/appointments/{{appointment.pk}}/update">Update</a></td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<div class="hs_page_title">
+  <div class="container">
+    <h3>Appointments</h3>
+    <ul>
+      <li><a href="{% url 'index' %}">Home</a></li>
+      <li><a>Appointments</a></li>
+    </ul>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <h4 class="hs_heading">Appointments</h4>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Patient</th>
+              <th scope="col">Date</th>
+              <th scope="col">Time</th>
+              <th scope="col">Blood Sugar</th>
+              <th scope="col">Blood Pressure</th>
+              <th scope="col">Hemoglobin</th>
+              <th scope="col">BMI</th>
+              <th scope="col">Platelets</th>
+              <th scope="col">Symptoms</th>
+              <th scope="col">Diagnosis</th>
+              <th scope="col">Prescription</th>
+              <th scope="col">Update</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for appointment in appointments %}
+            <tr scope="row">
+              <td>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</td>
+              <td>{{ appointment.date }}</td>
+              <td>{{ appointment.time }}</td>
+              <td>{{ appointment.blood_sugar }}</td>
+              <td>{{ appointment.blood_pressure }}</td>
+              <td>{{ appointment.hemoglobin }}</td>
+              <td>{{ appointment.bmi }}</td>
+              <td>{{ appointment.platelets }}</td>
+              <td>{{ appointment.symptoms }}</td>
+              <td>{{ appointment.diagnosis }}</td>
+              <td>{{ appointment.prescription }}</td>
+              <td><a class="btn btn-success" type="button" href="{% url 'update-appointment' appointment.id %}">Update</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>
 {% endblock %}
