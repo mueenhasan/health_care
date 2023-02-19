@@ -4562,6 +4562,14 @@ div[data-target]>div {
 .plus:hover {
 	box-shadow: 0 0 1px 15px rgba(54, 199, 119, 0.4), 0 0 1px 30px rgba(54, 199, 119, 0.1), 0 0 1px 45px rgba(54, 199, 119, 0.1);
 }
+.dataTables_wrapper td.dataTables_row-tools .plus {
+	box-shadow: none;
+	border-radius: 0;
+	width: 80px;
+	height: 80px;
+	background: none;
+	font-size: 12px;
+}
 
 /******************** Testimonial Section CSS Start ***********************/
 .hlt_testimonial {

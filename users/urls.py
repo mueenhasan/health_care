@@ -8,6 +8,7 @@ from .views import (
     PatientAppointmentListView,
     AppointmentCreateView,
     AppointmentUpdateView,
+    DoctorAppointmentsDatatableView,
     load_doctors
 )
 
@@ -19,6 +20,7 @@ urlpatterns = [
     path('book-appointment', AppointmentCreateView.as_view(), name='book-appointment'),
     path('ajax/load-doctors/', load_doctors, name='ajax_load_doctors'),
     path('appointments/<int:pk>', AppointmentUpdateView.as_view(), name='update-appointment'),
+    path('ajax/doctor-appointments/', DoctorAppointmentsDatatableView.as_view(), name="ajax-doctor-appointments"),
     path(
         'login',
         views.LoginView.as_view(

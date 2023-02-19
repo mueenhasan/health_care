@@ -1,3 +1,4 @@
+from ajax_datatable.views import AjaxDatatableView
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseForbidden
 from django.views.generic import CreateView, ListView, CreateView, UpdateView
@@ -113,6 +114,41 @@ class DoctorAppointmentListView(ListView):
 
     def get_queryset(self):
         return Appointment.objects.filter(doctor=self.request.user)
+
+
+class DoctorAppointmentsDatatableView(AjaxDatatableView):
+
+    model = Appointment
+    title = 'Appointments'
+    initial_order = [["date", "desc"], ]
+    length_menu = [[10, 20, 50, 100, -1], [10, 20, 50, 100, 'all']]
+    search_values_separator = '+'
+
+    column_defs = [
+        AjaxDatatableView.render_row_tools_column_def(),
+        {'name': 'id', 'visible': False, },
+        {'name': 'patient', 'foreign_field': 'patient__first_name', 'visible': True, },
+        {'name': 'date', 'visible': True, },
+        {'name': 'time', 'visible': True, },
+        {'name': 'blood_sugar', 'visible': True, },
+        {'name': 'blood_pressure', 'visible': True, },
+        {'name': 'hemoglobin', 'visible': True, },
+        {'name': 'bmi', 'visible': True, },
+        {'name': 'platelets', 'visible': True, },
+        {'name': 'symptoms', 'visible': True, },
+        {'name': 'diagnosis', 'visible': True, },
+        {'name': 'prescription', 'visible': True, },
+        {'name': 'edit', 'title': 'Edit', 'placeholder': True, 'searchable': False, 'orderable': False, },
+    ]
+
+    def customize_row(self, row, obj):
+        row['edit'] = """
+            <a href="/user/appointments/{}" class="btn-sm btn btn-success" type="button">
+               Edit
+            </a>
+        """.format(obj.id)
+        row['patient'] = "{} {}".format(obj.patient.first_name, obj.patient.last_name)
+        return
 
 
 class PatientAppointmentListView(ListView):
