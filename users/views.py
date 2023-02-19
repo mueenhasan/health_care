@@ -141,6 +141,13 @@ class DoctorAppointmentsDatatableView(AjaxDatatableView):
         {'name': 'edit', 'title': 'Edit', 'placeholder': True, 'searchable': False, 'orderable': False, },
     ]
 
+    def get_initial_queryset(self, request=None):
+        if request is None:
+            return self.model.objects.none()
+        elif request.user.is_anonymous:
+            return self.model.objects.none()
+        return self.model.objects.filter(doctor=request.user)
+
     def customize_row(self, row, obj):
         row['edit'] = """
             <a href="/user/appointments/{}" class="btn-sm btn btn-success" type="button">
