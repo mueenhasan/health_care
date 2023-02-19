@@ -1,25 +1,196 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
+{% load static %}
 {% block content %}
-  <h1>Book Appointment</h1>
-  <form method="post">
-    {% csrf_token %}
-    
-    {% if form.errors %}
-        {% for field in form %}
-            {% for error in field.errors %}
-                <div class="alert alert-danger">
-                    <strong>{{ error|escape }}</strong>
-                </div>
-            {% endfor %}
-        {% endfor %}
-        {% for error in form.non_field_errors %}
-            <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
+<div class="hs_page_title">
+    <div class="container">
+        <h3>Book Appointment</h3>
+        <ul>
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a>Book Appointment</a></li>
+        </ul>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <h4 class="hs_heading">Book Appointment</h4>
+            <div class="hs_comment_form">
+                <form method="post" id="appointmentForm" data-doctors-url="{% url 'ajax_load_doctors' %}">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="row">
+                        <!-- /.col-lg-6 -->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-user-md"></i></button>
+                                </span>
+                                <select required id="id_qualifications" name="qualifications" class="form-control">
+                                    <option value="">Select Doctor's Qualifications</option>
+                                    {% for qualification in qualifications %}
+                                        <option value="{{ qualification }}">{{ qualification }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <!-- /.col-lg-6 -->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-user-md"></i></button>
+                                </span>
+                                <select required id="id_expertise" name="expertise" class="form-control">
+                                    <option value="">Select Doctor's Expertise</option>
+                                    {% for expert in expertise %}
+                                        <option value="{{ expert }}">{{ expert }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <!-- /.col-lg-6 -->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-user-md"></i></button>
+                                </span>
+                                <select required id="id_doctor" name="doctor" class="form-control">
+                                    <option value="">Select Doctor</option>
+                                    {% for doctor in doctors %}
+                                        <option value="{{ doctor.id }}">Dr. {{ doctor.first_name }} {{ doctor.last_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <!-- /.col-lg-6 -->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-calendar"></i></button>
+                                </span>
+                                <p id="date-selector" class="form-control">{{ form.date }}</p>
+                            </div>
+                        </div>
+                        <!-- /.col-lg-6 -->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-clock-o"></i></button>
+                                </span>
+                                {{ form.time }}
+                            </div>
+                        </div>
+                        <!-- /.col-lg-6 --> 
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group"> <span class="input-group-btn">
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-user"></i></button>
+                                </span>
+                                <input type="number" name="hemoglobin" min="8" max="20" value="{{ form.hemoglobin.value|default_if_none:"" }}" required="" id="id_hemoglobin" class="form-control" placeholder="Hemoglobin">
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <!-- /.col-lg-6 --> 
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group"> 
+                                <span class="input-group-btn">
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-user"></i></button>
+                                </span>
+                                <input type="number" name="bmi" min="10.0" max="50.0" step="any" value="{{ form.bmi.value|default_if_none:"" }}" required="" id="id_bmi" class="form-control" placeholder="BMI">
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <!-- /.col-lg-6 -->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group"> <span class="input-group-btn">
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-calendar"></i></button>
+                                </span>
+                                <input type="number" name="platelets" min="100000" max="800000" value="{{ form.platelets.value|default_if_none:"" }}" required="" id="id_platelets" class="form-control" placeholder="Platelets Count">
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group"> <span class="input-group-btn">
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-phone"></i></button>
+                                </span>
+                                <input type="number" name="blood_sugar" min="50" max="300" value="{{ form.blood_sugar.value|default_if_none:"" }}" required="" id="id_blood_sugar" class="form-control" placeholder="Blood Sugar">
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <!-- /.col-lg-6 -->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="input-group"> <span class="input-group-btn">
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-heartbeat"></i></button>
+                                </span>
+                                <input type="number" name="blood_pressure" value="{{ form.blood_pressure.value|default_if_none:"" }}" min="50" max="400" required="" id="id_blood_pressure" class="form-control" placeholder="Blood Pressure">
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <!-- /.col-lg-12 -->
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="input-group"> <span class="input-group-btn">
+                                <textarea name="symptoms" cols="40" rows="10" id="id_symptoms" class="form-control" placeholder="Symptoms" spellcheck="false">{{ form.symptoms.value|default_if_none:"" }}</textarea>
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <p id="err"></p>
+                        <div class="form-group">
+                            <div class="col-lg-8 col-md-8 col-sm-12">
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <button id="em_sub" class="btn btn-success pull-right" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-        {% endfor %}
-    {% endif %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-  </form>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+{% endblock %}
+{% block bottom_script %}
+<script>
+    $("#id_expertise").change(function () {
+        var url = $("#appointmentForm").attr("data-doctors-url");  // get the url of the `load_cities` view
+        var expertise = $(this).val();  // get the selected country ID from the HTML input
+        var qualifications = $('#id_qualifications').find(":selected").val();
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+            data: {
+                'expertise': expertise,       // add the country id to the GET parameters
+                'qualifications': qualifications
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                $("#id_doctor").html(data);  // replace the contents of the city input with the data that came from the server
+            }
+        });
+    });
+    $("#id_qualifications").change(function () {
+        var url = $("#appointmentForm").attr("data-doctors-url");  // get the url of the `load_cities` view
+        var qualifications = $(this).val();  // get the selected country ID from the HTML input
+        var expertise = $('#id_expertise').find(":selected").val();
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+            data: {
+                'expertise': expertise,       // add the country id to the GET parameters
+                'qualifications': qualifications
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                $("#id_doctor").html(data);  // replace the contents of the city input with the data that came from the server
+            }
+        });
+    });
+</script>
 {% endblock %}

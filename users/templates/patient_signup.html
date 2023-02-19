@@ -5,8 +5,8 @@
     <div class="container">
         <h3>Patient Signup</h3>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/user/doctor_signup">Signup</a></li>
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a>Signup</a></li>
         </ul>
     </div>
 </div>
@@ -34,7 +34,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="input-group"> <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button"><i class="fa fa-user"></i></button>
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-user"></i></button>
                                 </span>
                                 <input required id="id_first_name" name="first_name" value="{{ form.first_name.value|default_if_none:"" }}" type="text" class="form-control" placeholder="First Name">
                             </div>
@@ -43,7 +43,7 @@
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="input-group"> 
                                 <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button"><i class="fa fa-user"></i></button>
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-user"></i></button>
                                 </span>
                                 <input required id="id_last_name" name="last_name" value="{{ form.last_name.value|default_if_none:"" }}" type="text" class="form-control" placeholder="Last Name">
                             </div>
@@ -53,13 +53,13 @@
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="input-group">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button"><i class="fa fa-venus-mars"></i></button>
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-venus-mars"></i></button>
                                 </span>
                                 <select required id="id_gender" name="gender" class="form-control">
                                     <option value="" selected>Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
+                                    {% for choice in form.gender.field.choices %}
+                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -68,25 +68,20 @@
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="input-group">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button"><i class="fa fa-tint"></i></button>
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-heartbeat"></i></button>
                                 </span>
                                 <select required id="id_blood_group" name="blood_group" class="form-control">
                                     <option value="" selected>Select Blood Group</option>
-                                    <option value="A+">A+</option>
-                                    <option value="A-">A-</option>
-                                    <option value="B+">B+</option>
-                                    <option value="B-">B-</option>
-                                    <option value="O+">O+</option>
-                                    <option value="O-">O-</option>
-                                    <option value="AB+">AB+</option>
-                                    <option value="AB-">AB-</option>
+                                    {% for choice in form.blood_group.field.choices %}
+                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
                         
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="input-group"> <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button"><i class="fa fa-user"></i></button>
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-calendar"></i></button>
                                 </span>
                                 <input required id="id_age" name="age" value="{{ form.age.value|default_if_none:"" }}" type="number" class="form-control" placeholder="Age">
                             </div>
@@ -94,7 +89,7 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="input-group"> <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button"><i class="fa fa-user"></i></button>
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-phone"></i></button>
                                 </span>
                                 <input required id="id_phone" name="phone" value="{{ form.phone.value|default_if_none:"" }}" type="text" class="form-control" placeholder="Phone">
                             </div>
@@ -103,7 +98,7 @@
                         <!-- /.col-lg-6 -->
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="input-group"> <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button"><i class="fa fa-user"></i></button>
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-user"></i></button>
                                 </span>
                                 <input required id="id_username" name="username" value="{{ form.username.value|default_if_none:"" }}" type="text" class="form-control" placeholder="Username">
                             </div>
@@ -112,7 +107,7 @@
                         <!-- /.col-lg-6 -->
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="input-group"> <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button"><i class="fa fa-envelope"></i></button>
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-envelope"></i></button>
                                 </span>
                                 <input required id="id_email" name="email" type="email" value="{{ form.email.value|default_if_none:"" }}" class="form-control" placeholder="Email">
                             </div>
@@ -121,7 +116,7 @@
                         <!-- /.col-lg-6 -->
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="input-group"> <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button"><i class="fa fa-lock"></i></button>
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-lock"></i></button>
                                 </span>
                                 <input required id="id_password1" name="password1" autocomplete="new-password" type="password" class="form-control" placeholder="Password">
                             </div>
@@ -130,7 +125,7 @@
                         <!-- /.col-lg-6 -->
                         <div class="col-lg-6 col-md-6 col-sm-12">
                             <div class="input-group"> <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button"><i class="fa fa-lock"></i></button>
+                                    <button class="fa-btn btn btn-success" type="button"><i class="fa fa-lock"></i></button>
                                 </span>
                                 <input required id="id_password2" name="password2" autocomplete="new-password" type="password" class="form-control" placeholder="Confirm Password">
                             </div>

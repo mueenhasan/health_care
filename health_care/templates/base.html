@@ -33,15 +33,19 @@
     {% block footer %}
         {% include "footer.html" %}
     {% endblock %} 
-    <div class="hs_copyright">Copyright © 2018 Health Care HTML Template. All Rights Reserved.</div>
-    <!-- Main JS file start--> 
-    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script> 
-    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script> 
-    <script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script> 
-    <script type="text/javascript" src="{% static 'js/jquery.bxslider.js' %}"></script> 
-    <script type="text/javascript" src="{% static 'js/jquery.mixitup.min.js' %}"></script> 
-    <script type="text/javascript" src="{% static 'js/smoothscroll.js' %}"></script> 
-    <script type="text/javascript" src="{% static 'js/single-0.1.0.js' %}"></script> 
+    <div class="hs_copyright">Copyright &copy; {% now "Y" %} Health Care. All Rights Reserved.</div>
+    <!-- Main JS file start-->
+    {% block script %}
+    {% endblock %}
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.bxslider.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.mixitup.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/smoothscroll.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/single-0.1.0.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
+    {% block bottom_script %}
+    {% endblock %}
 </body>
 </html>

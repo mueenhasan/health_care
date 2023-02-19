@@ -3,10 +3,10 @@
 {% block content %}
 <div class="hs_page_title">
     <div class="container">
-        <h3>Patient Signup</h3>
+        <h3>Sign in</h3>
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/user/login">Sigin</a></li>
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a>Sign In</a></li>
         </ul>
     </div>
 </div>
@@ -56,22 +56,6 @@
                                       <i class="fa fa-eye"></i>
                                     </span>
                                   </div>
-                                  
-                                  <script>
-                                    function togglePasswordVisibility() {
-                                      var passwordInput = document.getElementById("id_password");
-                                      var passwordToggle = document.querySelector(".password-toggle-addon i");
-                                      if (passwordInput.type === "password") {
-                                        passwordInput.type = "text";
-                                        passwordToggle.classList.remove("fa-eye");
-                                        passwordToggle.classList.add("fa-eye-slash");
-                                      } else {
-                                        passwordInput.type = "password";
-                                        passwordToggle.classList.remove("fa-eye-slash");
-                                        passwordToggle.classList.add("fa-eye");
-                                      }
-                                    }
-                                  </script>
                                 <!-- /input-group -->
                             </div>
                         </div>
@@ -90,4 +74,21 @@
     </div>
     <div class="clearfix"></div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("id_password");
+        var passwordToggle = document.querySelector(".password-toggle-addon i");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            passwordToggle.classList.remove("fa-eye");
+            passwordToggle.classList.add("fa-eye-slash");
+        } else {
+            passwordInput.type = "password";
+            passwordToggle.classList.remove("fa-eye-slash");
+            passwordToggle.classList.add("fa-eye");
+        }
+    }
+</script>
 {% endblock %}

@@ -7,16 +7,18 @@ from .views import (
     DoctorAppointmentListView,
     PatientAppointmentListView,
     AppointmentCreateView,
-    AppointmentUpdateView
+    AppointmentUpdateView,
+    load_doctors
 )
 
 urlpatterns = [
-    path('doctor_signup', DoctorSignUpView.as_view(), name='doctor_signup'),
-    path('patient_signup', PatientSignUpView.as_view(), name='patient_signup'),
-    path('doctor_appointments', DoctorAppointmentListView.as_view(), name='doctor_appointments'),
-    path('patient_appointments', PatientAppointmentListView.as_view(), name='patient_appointments'),
-    path('book_appointment', AppointmentCreateView.as_view(), name='book_appointment'),
-    path('appointments/<int:pk>/update', AppointmentUpdateView.as_view(), name='update_appointment'),
+    path('doctor-signup', DoctorSignUpView.as_view(), name='doctor-signup'),
+    path('patient-signup', PatientSignUpView.as_view(), name='patient-signup'),
+    path('doctor-appointments', DoctorAppointmentListView.as_view(), name='doctor-appointments'),
+    path('patient-appointments', PatientAppointmentListView.as_view(), name='patient-appointments'),
+    path('book-appointment', AppointmentCreateView.as_view(), name='book-appointment'),
+    path('ajax/load-doctors/', load_doctors, name='ajax_load_doctors'),
+    path('appointments/<int:pk>/update', AppointmentUpdateView.as_view(), name='update-appointment'),
     path(
         'login',
         views.LoginView.as_view(

@@ -11,7 +11,7 @@ class User(AbstractUser):
 class Doctor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     name = models.CharField(max_length=100)
-    specialization = models.CharField(max_length=100)
+    qualifications = models.CharField(max_length=20, null=True)
     expertise = models.CharField(max_length=50)
     hospital = models.CharField(max_length=50)
 
@@ -21,7 +21,7 @@ class Patient(models.Model):
     age = models.PositiveIntegerField()
     phone = models.CharField(max_length=15)
     gender = models.CharField(max_length=6, null=True, blank=True)
-    bloogd_group = models.CharField(max_length=5, null=True, blank=True)
+    blood_group = models.CharField(max_length=5, null=True, blank=True)
 
 
 class Appointment(models.Model):
