@@ -1,10 +1,71 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
+{% load static %}
 {% block content %}
-  <h1>Update Appointment</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-  </form>
+<div class="hs_page_title">
+    <div class="container">
+        <h3>Update Appointment</h3>
+        <ul>
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a>Update Appointment</a></li>
+        </ul>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <h4 class="hs_heading">Update Appointment</h4>
+            <div class="hs_comment_form">
+                <form method="post">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="row">
+                        <!-- /.col-lg-12 -->
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="input-group"> <span class="input-group-btn">
+                                <textarea name="symptoms" cols="40" rows="10" id="id_symptoms" class="form-control" placeholder="Symptoms" spellcheck="false">{{ form.symptoms.value|default_if_none:"" }}</textarea>
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <!-- /.col-lg-12 -->
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="input-group"> <span class="input-group-btn">
+                              <textarea name="diagnosis" cols="40" rows="10" id="id_diagnosis" class="form-control" placeholder="Diagnosis" spellcheck="false">{{ form.diagnosis.value|default_if_none:"" }}</textarea>
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <!-- /.col-lg-12 -->
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="input-group"> <span class="input-group-btn">
+                              <textarea name="prescription" cols="40" rows="10" id="id_prescription" class="form-control" placeholder="Prescription" spellcheck="false">{{ form.prescription.value|default_if_none:"" }}</textarea>
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <p id="err"></p>
+                        <div class="form-group">
+                            <div class="col-lg-8 col-md-8 col-sm-12">
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <button id="em_sub" class="btn btn-success pull-right" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
 {% endblock %}

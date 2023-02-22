@@ -3,21 +3,21 @@
   <div class="container">
     <div class="row">
         <div class="col-lg-2 col-md-2 col-sm-12">
-          <div id="hs_logo" > <a href="index.html"> <img src="{% static 'images/logo.svg' %}" alt=""> </a> </div>
+          <div id="hs_logo" > <a href="{% url 'index' %}"> <img src="{% static 'images/logo.svg' %}" alt=""> </a> </div>
           <!-- #logo --> 
         </div>
         <div class="col-lg-8 col-md-8 col-sm-10">
           <button type="button" class="hs_nav_toggle navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">Menu<i class="fa fa-bars"></i></button>
           <nav>
             <ul class="hs_menu collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <li><a class="active" href="/">Home</a></li>
+              <li><a class="active" href="{% url 'index' %}">Home</a></li>
               <li><a>Appointments</a>
                 <ul>
                   {% if request.user.is_doctor %}
-                  <li><a href="/user/doctor_appointments">List Appointments</a></li>
+                  <li><a href="{% url 'doctor-appointments' %}">List Appointments</a></li>
                   {% elif request.user.is_patient %}
-                  <li><a href="/user/patient_appointments">List Appointments</a></li>
-                  <li><a href="/user/book_appointment">Book Appointment</a></li>
+                  <li><a href="{% url 'patient-appointments' %}">List Appointments</a></li>
+                  <li><a href="{% url 'book-appointment' %}">Book Appointment</a></li>
                   {% else %}
                   <li><a href="#">List Appointments</a></li>
                   <li><a href="#">Book Appointment</a></li>
@@ -27,13 +27,13 @@
               {% if request.user.is_anonymous %}
               <li><a>Signup</a>
                 <ul>
-                  <li><a href="/user/doctor_signup">Doctor Signup</a></li>
-                  <li><a href="/user/patient_signup">Patient Signup</a></li>
+                  <li><a href="{% url 'doctor-signup' %}">Doctor Signup</a></li>
+                  <li><a href="{% url 'patient-signup' %}">Patient Signup</a></li>
                 </ul>
               </li>
-              <li><a class="active" href="/user/login">Login</a></li>
+              <li><a class="active" href="{% url 'login' %}">Login</a></li>
               {% else %}
-              <li><a class="active" href="/user/logout">Logout</a></li>
+              <li><a class="active" href="{% url 'logout' %}">Logout</a></li>
               {% endif %}
             </ul>
           </nav>
